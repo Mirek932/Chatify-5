@@ -1,16 +1,18 @@
-## Basics
+# Basics
 [#] Basic nachrichten
 [#] Usernames
 [#] Groups
-## Message Saving
+# Message Saving
 [#] Message Saving
 [#] Message Loading
-## Groups
-[\\] Group Lists
-## UI
-[ ] Messages UI Fix
+# Groups
+[#] Group Lists
+[ ] Group Saving
+# Bugs
+[#] Messages UI Fix
+
+
+# Extrea Features
+[ ] Livestreams
 ## Users
 [ ] Current Chat Room Users
-
-## Extrea Features
-[ ] Livestreams

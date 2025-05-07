@@ -22,3 +22,6 @@ body {
     width: 25%;
     padding: 8px;
   }
+  .somemone-chatting{
+    display: flex;
+  }

@@ -1,6 +1,12 @@
 import { socket } from "../Server/socket.js";
 export var Username = "Anonym";
 var targetUsername = "-";
+export var staticID = localStorage.getItem("staticID") || "FFFFFFFFF";
+;
+if (staticID == "FFFFFFFFF") {
+    localStorage.setItem("staticID", Str_Random(20));
+    staticID = localStorage.getItem("staticID") || "FFFFFFFFF";
+}
 var localstorageUname = localStorage.getItem("Username") || '""';
 if (localstorageUname && localstorageUname !== '""')
     Username = localstorageUname;
@@ -26,3 +32,13 @@ singinForum.addEventListener("click", () => {
     // const image = imageEle.files[0];
     ChangeUsername(name.value);
 });
+function Str_Random(length) {
+    let result = '';
+    const characters = 'abcdeghijklmnopqrstuvwxyz0123456789ABCDEGHIJKLMNOPQRSTUVWXYZ-';
+    // Loop to generate characters for the specified length
+    for (let i = 0; i < length; i++) {
+        const randomInd = Math.floor(Math.random() * characters.length);
+        result += characters.charAt(randomInd);
+    }
+    return result;
+}

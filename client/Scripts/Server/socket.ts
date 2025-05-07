@@ -17,6 +17,17 @@ form.addEventListener('submit', (e) => {
   }
 });
 
+socket.on("send active CACCs", (successfully:boolean)=>{
+  var responseInfo = <HTMLElement>document.getElementById("someone-chatting");
+  if(successfully)
+    responseInfo.classList.add("hidden");
+  else
+    responseInfo.classList.add("hidden");
+});
+
+var CACCsInterval = setInterval(()=>{
+  socket.emit("get CACCs");
+}, 1000);
 
 socket.on("info box", (msg:string, time=1000) => {
   var hideElement = <HTMLElement>document.getElementById("hideMessageSpam");

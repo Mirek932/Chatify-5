@@ -2,81 +2,33 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
-import fs from "fs";
 import { fileURLToPath } from 'url';
 import { writeFile, readFile } from 'fs/promises';
-//@ts-ignore
-import NodeMediaServer from "node-media-server";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
-// ── 1) Media-Server konfigurieren ─────────────────────────────
-const config = {
-    rtmp: {
-        port: 1935, // RTMP Port
-        chunk_size: 60000,
-        gop_cache: true,
-        ping: 30,
-        ping_timeout: 60
-    },
-    http: {
-        port: 8000, // HTTP Port
-        allow_origin: '*'
-    },
-    trans: {
-        ffmpeg: 'C:/ffmpeg/bin/ffmpeg',
-        tasks: [
-            {
-                app: 'live',
-                hls: true,
-                hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]'
-            }
-        ]
-    }
-};
-const nms = new NodeMediaServer(config);
-nms.run();
 var UsersMessagesPerMinute = new Map();
 var ActiveUsers = new Array();
 const Messages = await LoadMessages();
+const Rooms = await LoadRooms();
+var currentlyActiveChattingChatters = ["CACCs"]; //short CACCs
 const MessagesPerMinuteLimit = 20;
 // Middleware für statische Dateien
 app.use(express.static(path.join(__dirname, '../dist/client')));
-// ── 2) HLS-Ordner als static bereitstellen ─────────────────────
-app.use('/streams', express.static('media/live'));
 // Typisierte Route-Handler
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/client/' + req));
 });
-app.get('/streams', (req, res) => {
-    res.writeHead(200, {
-        "Content-Type": "multipart/x-mixed-replace; boundary=frame",
-        "Cache-Control": "no-cache",
-        "Connection": "close",
-        "Pragma": "no-cache"
-    });
-    const interval = setInterval(() => {
-        try {
-            const img = fs.readFileSync(path.join(__dirname, "../Streams/Demo/" + "frame.jpg"));
-            res.write(`--frame\r\nContent-Type: image/jpeg\r\nContent-Length: ${img.length}\r\n\r\n`);
-            res.write(img);
-            res.write("\r\n");
-        }
-        catch (e) {
-            console.error("Image read error:", e);
-        }
-    }, 100); // 10 fps
-    req.on("close", () => clearInterval(interval));
-});
 // Socket.IO mit Typen
 io.on('connection', (socket) => {
     console.log('Neue Verbindung:', socket.id);
-    var waitForClientToInit = setTimeout(() => {
-        if (socket.id) {
+    var LoadHub = setTimeout(() => {
+        if (socket) {
             ClientLoadMessages(socket.id, "0404");
-            clearTimeout(waitForClientToInit);
+            ClientLoadRooms(socket.id);
+            clearTimeout(LoadHub);
         }
     }, 1000);
     socket.on('chat message', (msg, author, channel) => {
@@ -98,15 +50,32 @@ io.on('connection', (socket) => {
             SaveMessages();
         }
         else {
-            io.emit("single chat message", "Du hast dein Limit von Nachrichten erreicht! Warte eine Minute...", socket.id);
-            io.emit("info box", "Du hast dein Limit von Nachrichten erreicht! Warte eine Minute...");
+            socket.emit("single chat message", "Du hast dein Limit von Nachrichten erreicht! Warte eine Minute...", socket.id);
+            socket.emit("info box", "Du hast dein Limit von Nachrichten erreicht! Warte eine Minute...");
         }
     });
     socket.on("Change Username", (uname) => {
-        io.emit("Change Username", ChangeUsername(uname), socket.id);
+        socket.emit("Change Username", ChangeUsername(uname), socket.id);
     });
     socket.on("reload messages", (channel) => {
         ClientLoadMessages(socket.id, channel);
+    });
+    socket.on("get CACCs", (channel) => {
+        socket.emit("send active CACCs", currentlyActiveChattingChatters.includes(channel));
+    });
+    socket.on("create chat room", (channelID, channelDisplayName, isPublic = true, staticID = "FFFFFFFFF") => {
+        console.log("Chat room ${channelDisplayName} created with id ${channelID}");
+        var StaticID = "public";
+        if (!isPublic)
+            StaticID = staticID;
+        var Room = {
+            DisplayName: channelDisplayName,
+            RoomID: channelID,
+            StaticID: StaticID
+        };
+        Rooms.push(Room);
+        SaveRooms();
+        io.emit("create chat room", channelID, channelDisplayName, StaticID);
     });
     socket.on('disconnect', () => {
         console.log('Client getrennt:', socket.id);
@@ -118,6 +87,16 @@ async function ClientLoadMessages(clientID, chatRoom) {
             io.emit("single chat message", msg.User + "> " + msg.Message, clientID);
     });
 }
+async function ClientLoadRooms(clientID) {
+    Rooms.forEach((room) => {
+        io.emit("single create chat room", clientID, room.RoomID, room.DisplayName, room.StaticID);
+    });
+}
+async function SaveRooms() {
+    const jsonString = JSON.stringify(Rooms, null, 2);
+    await writeFile("./Server/Databank/rooms.json", jsonString, "utf-8");
+    console.log("Successfuly Saved the Rooms!");
+}
 async function SaveMessages() {
     const jsonString = JSON.stringify(Messages, null, 2);
     await writeFile("./Server/Databank/messages.json", jsonString, "utf-8");
@@ -127,6 +106,11 @@ async function LoadMessages() {
     const fileContent = await readFile("./Server/databank/messages.json", "utf-8");
     const messages = JSON.parse(fileContent);
     return messages;
+}
+async function LoadRooms() {
+    const fileContent = await readFile("./Server/databank/rooms.json", "utf-8");
+    const rooms = JSON.parse(fileContent);
+    return rooms;
 }
 function ChangeUsername(uname) {
     ActiveUsers.forEach((item) => {

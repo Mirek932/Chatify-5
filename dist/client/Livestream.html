@@ -1,8 +1,20 @@
 <!DOCTYPE html>
 <html>
-  <head><title>MJPEG Stream</title></head>
+  <head><title>MJPEG Stream</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <style>
+    body{
+      margin: 40px auto;
+      max-width: 650px;
+      background-color: #444;
+    }
+  </style>
   <body>
     <h1>Live Stream</h1>
-    <img src="/video" style="max-width: 100%;" />
+    <video id="videoPlayer" width="650" controls muted="muted">
+      <source src="/video" type="video/mp4" />
+    </video>
   </body>
 </html>
