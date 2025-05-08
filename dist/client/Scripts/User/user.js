@@ -17,9 +17,7 @@ export function ChangeUsername(uname) {
 }
 var WaitForSocketInit = setTimeout(() => {
     if (socket)
-        socket.on("Change Username", (wasSuccessFull, id) => {
-            if (id !== socket.id)
-                return;
+        socket.on("Change Username", (wasSuccessFull) => {
             if (wasSuccessFull)
                 Username = targetUsername;
         });

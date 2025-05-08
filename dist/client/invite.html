@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Discord Preview (Open Graph) -->
+    <meta property="og:title" content="Chatify Eiladung" />
+    <meta property="og:description" content="Sie wurden gerade eben in einen Chatify-Server eingeladen! Treten sie ihn nun bei!" />
+    <meta property="og:image" content="https://t19398j6-3000.euw.devtunnels.ms/static/preview.png" />
+    <meta property="og:url" content="https://t19398j6-3000.euw.devtunnels.ms/invite" />
+    <title>Einladung</title>
+    <style>
+        body{
+            font-family: 'Inter', sans-serif;
+            background-color: whitesmoke;
+        }
+        h1{
+            text-align: center;
+            font-size: 300%;
+        }
+        button{
+            margin-left: 25%;
+            width: 50%;
+            height: 10rem;
+            background-color: aliceblue;
+            border-radius: 15px;
+            box-shadow: 4px 4px 4px black;
+            font-size: larger;
+            font-weight: bolder;
+        }
+        button:hover{
+            background-color: rgb(211, 219, 226);
+            box-shadow: 5px 5px 4px black;
+        }
+        p{
+            color: rgb(255, 0, 0);
+            font-weight: bold;
+            text-align: center;
+            font-size:larger;
+            background-color: antiquewhite;
+            padding: 1%;
+        }
+        .to{
+            padding: 0%;
+            color: black;
+            background-color: whitesmoke;
+        }
+    </style>
+</head>
+<body>
+    <h1>Du wurdest eingeladen!</h1>
+    <button id="Invite">Einladung akzeptieren</button>
+    <p class="to">Herzlichen Glückwunsch!</p>
+    <p class="to">Du wurdest den Chatify Server eingeladen:</p>
+    <p id="serverName">Super Cool Server</p>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="Scripts/Invite/invition.js"></script>
+</body>
+</html>

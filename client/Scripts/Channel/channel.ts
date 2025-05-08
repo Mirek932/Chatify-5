@@ -53,9 +53,11 @@ function AppendChatRoom(displayName:string, channelID:string, important:boolean=
         RoomParent.setAttribute("style", "background-color: #e2e2e2;");
 
     RoomParent.addEventListener("click", ()=>{
+        socket.emit("leave chat room", (currentChannel));
         currentChannel=<string>RoomParent.getAttribute("channelID");
         ClearMessages();
         socket.emit("reload messages", currentChannel);
+        socket.emit("join chat room", (currentChannel));
     });
 
     RoomParent.appendChild(RoomHeader);

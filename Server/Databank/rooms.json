@@ -5,8 +5,27 @@
     "StaticID": "public"
   },
   {
-    "DisplayName": "Hallo Leute",
-    "RoomID": "ghg",
-    "StaticID": "QMwQmZq7HOzdxDzbkhDI"
+    "DisplayName": "Chatroom",
+    "RoomID": "EmilianSuperPrivaterRoom",
+    "StaticID": "ctAgsn4sjRret98MkKOz",
+    "OnlineMembers": [
+      "FhT2DCUhcw4IC8WOAAAH"
+    ]
+  },
+  {
+    "DisplayName": "Emilian Privat",
+    "RoomID": "EmilianSuperPrivaterRoom",
+    "StaticID": "ctAgsn4sjRret98MkKOz",
+    "OnlineMembers": [
+      "truU8vg456LCKuC4AAAR"
+    ]
+  },
+  {
+    "DisplayName": "Mirek Privat",
+    "RoomID": "EmilianSuperPrivaterRoom",
+    "StaticID": "85hdTsAGX-qGy0XpglWB",
+    "OnlineMembers": [
+      "rT19d58qfDuARNFjAAAP"
+    ]
   }
 ]

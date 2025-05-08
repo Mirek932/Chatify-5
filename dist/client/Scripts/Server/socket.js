@@ -15,10 +15,11 @@ socket.on("send active CACCs", (successfully) => {
     if (successfully)
         responseInfo.classList.add("hidden");
     else
-        responseInfo.classList.add("hidden");
+        responseInfo.classList.remove("hidden");
 });
 var CACCsInterval = setInterval(() => {
-    socket.emit("get CACCs");
+    socket.emit("set CACC", currentChannel, input.value.trim() != "");
+    socket.emit("get CACCs", currentChannel);
 }, 1000);
 socket.on("info box", (msg, time = 1000) => {
     var hideElement = document.getElementById("hideMessageSpam");

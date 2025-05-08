@@ -5,7 +5,7 @@ import { currentChannel } from "../Channel/channel.js";
 declare const io: () => Socket;
 
 export const socket = io();
-  
+
 const form = <HTMLFormElement>document.getElementById('chat-form');
 const input = <HTMLInputElement>document.getElementById('chat-input');
 
@@ -22,11 +22,12 @@ socket.on("send active CACCs", (successfully:boolean)=>{
   if(successfully)
     responseInfo.classList.add("hidden");
   else
-    responseInfo.classList.add("hidden");
+    responseInfo.classList.remove("hidden");
 });
 
 var CACCsInterval = setInterval(()=>{
-  socket.emit("get CACCs");
+  socket.emit("set CACC", currentChannel, input.value.trim() != "");
+  socket.emit("get CACCs", currentChannel);
 }, 1000);
 
 socket.on("info box", (msg:string, time=1000) => {

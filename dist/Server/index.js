@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import path from 'path';
@@ -8,31 +8,25 @@ import registerRoomHandlers from './listeners/Rooms.js';
 import registerUserHandlers from './listeners/User.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const PORT = process.env.PORT || 3000;
 const IPADRESS = `localhost:${PORT}`;
-
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
-
 // Middleware für statische Dateien
 app.use(express.static(path.join(__dirname, '../dist/client')));
 app.use('/static', express.static(path.join(__dirname, '../dist/client/static')));
-
 // Typisierte Route-Handler
-app.get('/', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../dist/client/'+req));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/client/' + req));
 });
 // ganz oben, vor allen app.get:
 app.use('/static', express.static(path.join(__dirname, '../dist/client/static')));
-
 app.get('/invite', (req, res) => {
-  const channelID       = String(req.query.channelID       || 'Unknown');
-  const channelName     = String(req.query.channelDisplayName || 'Chatroom');
-
-  res.setHeader('Cache-Control','no-cache, no-store, must-revalidate');
-  res.send(`<!DOCTYPE html>
+    const channelID = String(req.query.channelID || 'Unknown');
+    const channelName = String(req.query.channelDisplayName || 'Chatroom');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.send(`<!DOCTYPE html>
   <html lang="de">
     <head>
       <meta charset="utf-8"/>
@@ -54,22 +48,17 @@ app.get('/invite', (req, res) => {
     </body>
   </html>`);
 });
-
-
 // Socket.IO mit Typen
 io.on('connection', (socket) => {
-  console.log('Neue Verbindung:', socket.id);
-
-  // Register the Handlers
-  registerChatHandlers(socket, io);
-  registerRoomHandlers(socket, io);
-  registerUserHandlers(socket, io);
-
-  socket.on('disconnect', () => {
-    console.log('Client getrennt:', socket.id);
-  });
+    console.log('Neue Verbindung:', socket.id);
+    // Register the Handlers
+    registerChatHandlers(socket, io);
+    registerRoomHandlers(socket, io);
+    registerUserHandlers(socket, io);
+    socket.on('disconnect', () => {
+        console.log('Client getrennt:', socket.id);
+    });
 });
-
 server.listen(PORT, () => {
-  console.log(`Server läuft auf http://${IPADRESS}:${PORT}`);
+    console.log(`Server läuft auf http://${IPADRESS}:${PORT}`);
 });

@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --import ./register-loader.mjs ./Server/server.ts",
+    "start": "node --import ./register-loader.mjs ./Server/index.ts",
+    "OLDstart": "ts-node ./Server/server.ts",
     "watch-build": "nodemon --watch client --ext ts,js,json --exec \"npm run build\""
   },
   "type": "module",
