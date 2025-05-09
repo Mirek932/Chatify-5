@@ -6,7 +6,7 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --import ./register-loader.mjs ./Server/index.ts",
-    "OLDstart": "ts-node ./Server/server.ts",
+    "OLDstart": "nodemon dist/Server/index.js --ignore dist/Server/Datenbank",
     "watch-build": "nodemon --watch client --ext ts,js,json --exec \"npm run build\""
   },
   "type": "module",
@@ -15,6 +15,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "date-and-time": "^3.6.0",
     "express": "^4.21.2",
     "http": "^0.0.1-security",
     "naughty-words": "^1.2.0",

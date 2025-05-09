@@ -16,6 +16,7 @@ var waitForSocket = setTimeout(()=>{
         socket.on('single create chat room', (clientID:string, channelID:string, channelDisplayName:string, isPublic:string)=>{
             if(clientID == socket.id)
             {
+                document.getElementById("rooms-loading")?.classList.add("hidden");
                 if(isPublic=="public")
                     AppendChatRoom(channelDisplayName, channelID);
                 else if(isPublic == staticID)
@@ -23,19 +24,28 @@ var waitForSocket = setTimeout(()=>{
             }
 
         });
+        socket.on("send user count", (count:number)=>{
+            UserCountElement.innerText = "👤"+count;
+        });
         clearTimeout(waitForSocket);
     }
 }, 1000);
 
+export var currentChannelName = "Hub";
 const JoinRoom = <HTMLButtonElement>document.getElementById("join-room");
 const JoinChannel = <HTMLInputElement>document.getElementById("room-code");
 const channelDisplayName = <HTMLInputElement>document.getElementById("room-name");
 const isPublic = <HTMLInputElement>document.getElementById("room-checkbox");
+const CopyLinkButton = <HTMLButtonElement>document.getElementById("copy-room-link");
+CopyLinkButton.addEventListener("click", ()=>{
+    navigator.clipboard.writeText(window.location.origin + `/invite?channelID=${currentChannel}&channelDisplayName=${currentChannelName}`);
+});
 JoinRoom.addEventListener("click", ()=>{
     currentChannel=JoinChannel.value;
     ClearMessages();
     socket.emit("reload messages", currentChannel);
-    socket.emit("create chat room", currentChannel, channelDisplayName.value, isPublic.checked, staticID);
+    currentChannelName = channelDisplayName.value;
+    socket.emit("create chat room", currentChannel, channelDisplayName.value, false/*isPublic.checked*/, staticID);
 });
 function AppendChatRoom(displayName:string, channelID:string, important:boolean=false)
 {
@@ -55,6 +65,7 @@ function AppendChatRoom(displayName:string, channelID:string, important:boolean=
     RoomParent.addEventListener("click", ()=>{
         socket.emit("leave chat room", (currentChannel));
         currentChannel=<string>RoomParent.getAttribute("channelID");
+        currentChannelName = RoomHeader.innerHTML;
         ClearMessages();
         socket.emit("reload messages", currentChannel);
         socket.emit("join chat room", (currentChannel));
@@ -68,6 +79,7 @@ function AppendChatRoom(displayName:string, channelID:string, important:boolean=
 const RoomSearch = <HTMLInputElement>document.getElementById("rooms-search");
 
 const Rooms = <HTMLDivElement>document.getElementById("Room-Container");
+const UserCountElement = <HTMLDivElement>document.getElementById("user-count");
 setInterval(()=>{
     Array.from(Rooms.children).forEach(child => {
         const nameElement = <HTMLElement>Array.from(child.children)[0];
@@ -79,4 +91,5 @@ setInterval(()=>{
                 child.classList.remove("hidden");
         }
     });
+    socket.emit("get user count");
 }, 100);

@@ -6,11 +6,6 @@
   },
   {
     "ChatRoom": "0404",
-    "Message": "test",
-    "User": "Mian"
-  },
-  {
-    "ChatRoom": "0404",
     "Message": "das ghgt",
     "User": "Anonym"
   },
@@ -37,11 +32,6 @@
   {
     "ChatRoom": "0404",
     "Message": "oha",
-    "User": "Mian"
-  },
-  {
-    "ChatRoom": "0404",
-    "Message": "was",
     "User": "Mian"
   },
   {
@@ -606,11 +596,6 @@
   },
   {
     "ChatRoom": "0404",
-    "Message": "was",
-    "User": "Mian"
-  },
-  {
-    "ChatRoom": "0404",
     "Message": "ghgt",
     "User": "Mian"
   },
@@ -697,11 +682,6 @@
   {
     "ChatRoom": "ghg",
     "Message": "Was ist das für eine ROOM ID?",
-    "User": "Mian"
-  },
-  {
-    "ChatRoom": "0404",
-    "Message": "tes",
     "User": "Mian"
   },
   {
@@ -992,86 +972,163 @@
   {
     "ChatRoom": "0404",
     "Message": "nein",
-    "User": "Mian"
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "0404",
     "Message": "was",
-    "User": "Mian"
-  },
-  {
-    "ChatRoom": "0404",
-    "Message": "was",
-    "User": "Mian"
-  },
-  {
-    "ChatRoom": "0404",
-    "Message": "was",
-    "User": "Mian"
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "ghg",
     "Message": "7",
-    "User": "Anonym"
+    "User": "Anonym",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "ghg",
     "Message": "7?",
-    "User": "Anonym"
+    "User": "Anonym",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "ghg",
     "Message": "Sie, Ben?",
-    "User": "Mian"
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "0404",
     "Message": "ja",
-    "User": "Anonym"
+    "User": "Anonym",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "ghg",
     "Message": "nein",
-    "User": "Anonym"
+    "User": "Anonym",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "ghg",
     "Message": "7",
-    "User": "Anonym"
+    "User": "Anonym",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "0404",
     "Message": "yoo",
-    "User": "ss"
+    "User": "ss",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "EmilianSuperPrivaterRoom",
     "Message": "Hi",
-    "User": "Mian"
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "EmilianSuperPrivaterRoom",
     "Message": "Wie findest du?",
-    "User": "Mian"
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "0404",
     "Message": "yoo",
-    "User": ""
+    "User": "",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "EmilianSuperPrivaterRoom",
     "Message": "joo",
-    "User": ""
+    "User": "NonameFBI",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "EmilianSuperPrivaterRoom",
     "Message": "joa is gut",
-    "User": ""
+    "User": "Nonanme",
+    "Time": "2025/05/09 17:18"
   },
   {
     "ChatRoom": "EmilianSuperPrivaterRoom",
     "Message": "auch wenn sich nicht sooo viel geändert hat",
-    "User": ""
+    "User": "Nonanme",
+    "Time": "2025/05/09 17:18"
+  },
+  {
+    "ChatRoom": "0404",
+    "Message": "tes",
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
+  },
+  {
+    "ChatRoom": "0404",
+    "Message": "was",
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
+  },
+  {
+    "ChatRoom": "0404",
+    "Message": "was",
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
+  },
+  {
+    "ChatRoom": "0404",
+    "Message": "test",
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
+  },
+  {
+    "ChatRoom": "0404",
+    "Message": "was",
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
+  },
+  {
+    "ChatRoom": "0404",
+    "Message": "eigene Nachricht",
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
+  },
+  {
+    "ChatRoom": "0404",
+    "Message": "was",
+    "User": "Mian",
+    "Time": "2025/05/09 17:18"
+  },
+  {
+    "ChatRoom": "0404",
+    "Message": "hi",
+    "User": "Anonym",
+    "Time": "2025/05/09 17:37"
+  },
+  {
+    "ChatRoom": "0404",
+    "Message": "hi",
+    "User": "Mian",
+    "Time": "2025/05/09 17:37"
+  },
+  {
+    "ChatRoom": "234",
+    "Message": "tes",
+    "User": "Mian",
+    "Time": "2025/05/09 18:08"
+  },
+  {
+    "ChatRoom": "234",
+    "Message": "rtest",
+    "User": "Mian",
+    "Time": "2025/05/09 18:08"
+  },
+  {
+    "ChatRoom": "weas",
+    "Message": "ha",
+    "User": "Mian",
+    "Time": "2025/05/09 18:13"
   }
 ]

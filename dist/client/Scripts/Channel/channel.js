@@ -12,24 +12,34 @@ var waitForSocket = setTimeout(() => {
         });
         socket.on('single create chat room', (clientID, channelID, channelDisplayName, isPublic) => {
             if (clientID == socket.id) {
+                document.getElementById("rooms-loading")?.classList.add("hidden");
                 if (isPublic == "public")
                     AppendChatRoom(channelDisplayName, channelID);
                 else if (isPublic == staticID)
                     AppendChatRoom(channelDisplayName, channelID, true);
             }
         });
+        socket.on("send user count", (count) => {
+            UserCountElement.innerText = "👤" + count;
+        });
         clearTimeout(waitForSocket);
     }
 }, 1000);
+export var currentChannelName = "Hub";
 const JoinRoom = document.getElementById("join-room");
 const JoinChannel = document.getElementById("room-code");
 const channelDisplayName = document.getElementById("room-name");
 const isPublic = document.getElementById("room-checkbox");
+const CopyLinkButton = document.getElementById("copy-room-link");
+CopyLinkButton.addEventListener("click", () => {
+    navigator.clipboard.writeText(window.location.origin + `/invite?channelID=${currentChannel}&channelDisplayName=${currentChannelName}`);
+});
 JoinRoom.addEventListener("click", () => {
     currentChannel = JoinChannel.value;
     ClearMessages();
     socket.emit("reload messages", currentChannel);
-    socket.emit("create chat room", currentChannel, channelDisplayName.value, isPublic.checked, staticID);
+    currentChannelName = channelDisplayName.value;
+    socket.emit("create chat room", currentChannel, channelDisplayName.value, false /*isPublic.checked*/, staticID);
 });
 function AppendChatRoom(displayName, channelID, important = false) {
     const Rooms = document.getElementById("Room-Container");
@@ -46,6 +56,7 @@ function AppendChatRoom(displayName, channelID, important = false) {
     RoomParent.addEventListener("click", () => {
         socket.emit("leave chat room", (currentChannel));
         currentChannel = RoomParent.getAttribute("channelID");
+        currentChannelName = RoomHeader.innerHTML;
         ClearMessages();
         socket.emit("reload messages", currentChannel);
         socket.emit("join chat room", (currentChannel));
@@ -56,6 +67,7 @@ function AppendChatRoom(displayName, channelID, important = false) {
 }
 const RoomSearch = document.getElementById("rooms-search");
 const Rooms = document.getElementById("Room-Container");
+const UserCountElement = document.getElementById("user-count");
 setInterval(() => {
     Array.from(Rooms.children).forEach(child => {
         const nameElement = Array.from(child.children)[0];
@@ -66,4 +78,5 @@ setInterval(() => {
                 child.classList.remove("hidden");
         }
     });
+    socket.emit("get user count");
 }, 100);

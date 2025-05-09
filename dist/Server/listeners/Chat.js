@@ -1,4 +1,5 @@
 import { writeFile, readFile } from 'fs/promises';
+import { currentTime } from './Time.js';
 // MPM = Messages Per Minute
 // CACCs = currentlyActiveChattingChatters
 const MPM_LIMIT = 20;
@@ -19,11 +20,12 @@ export default function registerChatHandlers(socket, io) {
             UsersMPM.set(socket.id, SocketMPM + 1);
         if (SocketMPM < MPM_LIMIT) {
             // io.emit("chat message", author + '> ' + msg, channel);
-            io.in(channel).emit("chat message", author + "> " + msg, channel);
+            io.in(channel).emit("chat message", msg, channel, author, currentTime());
             Messages.push({
                 ChatRoom: channel,
                 Message: msg,
-                User: author
+                User: author,
+                Time: currentTime()
             });
             SaveMessages();
         }
@@ -45,6 +47,24 @@ export default function registerChatHandlers(socket, io) {
         else if (index !== -1)
             CACCs.slice(index, 1);
     });
+    socket.on("delete message", (msg, room, author, time) => {
+        var targetMessage = {
+            Message: msg,
+            ChatRoom: room,
+            User: author,
+            Time: time
+        };
+        console.log("Stage 1 " + targetMessage.Message + "-" + targetMessage.ChatRoom + "-" + targetMessage.User + "-" + targetMessage.Time);
+        const index = Messages.findIndex(msg => msg.ChatRoom === targetMessage.ChatRoom &&
+            msg.Message === targetMessage.Message &&
+            msg.User === targetMessage.User &&
+            msg.Time === targetMessage.Time);
+        console.log("Stage " + index);
+        if (index !== -1)
+            Messages.splice(index, 1);
+        io.in(room).emit("delete message", msg, author, time);
+        SaveMessages();
+    });
 }
 setInterval(() => {
     UsersMPM.forEach((value, key) => UsersMPM.set(key, 0));
@@ -52,7 +72,7 @@ setInterval(() => {
 async function ClientLoadMessages(clientID, chatRoom, io) {
     Messages.forEach((msg) => {
         if (msg.ChatRoom === chatRoom)
-            io.emit("single chat message", msg.User + "> " + msg.Message, clientID);
+            io.emit("single chat message", msg.Message, clientID, msg.User, msg.Time);
     });
 }
 async function SaveMessages() {

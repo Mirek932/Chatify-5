@@ -4,6 +4,7 @@ import { ChatMessage } from '../types/types.js';
 import fs from "fs";
 import { writeFile, readFile } from 'fs/promises';
 import { channelMembers } from './Rooms.js';
+import { currentTime } from './Time.js';
 // MPM = Messages Per Minute
 // CACCs = currentlyActiveChattingChatters
 
@@ -25,17 +26,19 @@ export default function registerChatHandlers(socket: Socket, io: Server) {
   socket.on('chat message', (msg:string, author:string, channel:string) => {
     console.log(author + "> " + msg + " < " + channel);
     
+
     var SocketMPM : number = UsersMPM.get(socket.id) || 1;
     if(SocketMPM)
       UsersMPM.set(socket.id,SocketMPM+1);
     if(SocketMPM < MPM_LIMIT)
     {
       // io.emit("chat message", author + '> ' + msg, channel);
-      io.in(channel).emit("chat message", author + "> " + msg, channel);
+      io.in(channel).emit("chat message", msg, channel, author, currentTime());
       Messages.push({
         ChatRoom: channel,
         Message: msg,
-        User: author
+        User: author,
+        Time: currentTime()
       });
       SaveMessages();
     }
@@ -61,6 +64,27 @@ export default function registerChatHandlers(socket: Socket, io: Server) {
     else if(index !== -1)
       CACCs.slice(index, 1);
   });
+
+  socket.on("delete message", (msg:string, room:string, author:string, time:string)=>{
+    var targetMessage:ChatMessage = {
+      Message: msg,
+      ChatRoom: room,
+      User: author,
+      Time: time
+    };
+    console.log("Stage 1 " + targetMessage.Message + "-"+targetMessage.ChatRoom+"-"+targetMessage.User+"-"+targetMessage.Time);
+      const index = Messages.findIndex(
+          msg =>
+            msg.ChatRoom === targetMessage.ChatRoom &&
+            msg.Message === targetMessage.Message &&
+            msg.User === targetMessage.User &&
+            msg.Time === targetMessage.Time
+        );
+      console.log("Stage " + index);
+        if (index !== -1) Messages.splice(index, 1);
+      io.in(room).emit("delete message", msg, author, time);
+      SaveMessages();
+    });
 }
 
 setInterval(()=>{ // Reset the MPMs for each user
@@ -70,7 +94,7 @@ setInterval(()=>{ // Reset the MPMs for each user
 async function ClientLoadMessages(clientID:string, chatRoom:string, io:Server) {
   Messages.forEach((msg:ChatMessage)=>{
     if(msg.ChatRoom === chatRoom)
-      io.emit("single chat message", msg.User + "> " + msg.Message, clientID);
+      io.emit("single chat message", msg.Message, clientID, msg.User, msg.Time);
   });
 }
 

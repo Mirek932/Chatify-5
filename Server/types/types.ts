@@ -2,6 +2,7 @@ export type ChatMessage = {
     ChatRoom: string;
     Message: string;
     User: string;
+    Time: string;
   };
   
 export type Room = {

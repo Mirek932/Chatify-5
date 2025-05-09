@@ -19,6 +19,7 @@
     <!-- Chat Container -->
     <div id="chat-container">
       <!-- Messages -->
+        <img src="static/PulseLoading.gif" id="messages-loading" style="width: 120px; height: auto; display: flex; position: absolute; left: 45%; top: 35%;" alt="Loading">
       <ul id="messages"></ul>
     </div>
 
@@ -26,7 +27,8 @@
     <form id="chat-form" class="chat-forum" action="">
       <input id="chat-input" class="chat-input" maxlength="500" autocomplete="off" placeholder="Enter your message..." />
       <button class="chat-button">Send</button>
-      <div id="char-count">500 characters remaining</div>
+      <div id="char-count">500</div>
+      <div id="user-count">👤1</div>
       <div id="someone-chatting" class="somemone-chatting">Somebody is responisve for everything... Why did you-</div>
     </form>
 
@@ -43,11 +45,12 @@
     <!-- Raum Popup -->
     <div class="popup" id="room-popup">
       <div class="popup-header">Raum erstellen oder beitreten</div>
+      <button class="popup-button" id="copy-room-link" style="padding: .2rem; margin: .2rem;">Link Kopieren</button>
       <div class="popup-content">
         <input type="text" minlength="4"maxlength="15" class="popup-input" placeholder="Raum Name" id="room-name" />
         <input type="text" minlength="4"maxlength="10" class="popup-input" type="password" placeholder="Raum Code" id="room-code" />
-        <p>Öffentlich?</p>
-        <input type="checkbox" id="room-checkbox"/>
+        <!--p>Öffentlich?</p>
+        <input type="checkbox" id="room-checkbox"/-->
         <button class="popup-button" id="join-room">Beitreten / Erstellen</button>
       </div>
       <br>
@@ -56,6 +59,9 @@
       <br>
       <br>
       <div id="Room-Container">
+        <center>
+          <img src="static/PulseLoading.gif" id="rooms-loading" style="width: 120px; height: auto; display:inline;" alt="Loading">
+        </center>
       </div>
     </div>
 
@@ -105,7 +111,7 @@
       // Character Count
       input.addEventListener("input", () => {
         const remaining = 500 - input.value.length;
-        charCount.textContent = `${remaining} characters remaining`;
+        charCount.textContent = `${remaining}`;
       });
     </script>
   </body>

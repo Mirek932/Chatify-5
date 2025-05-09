@@ -19,7 +19,7 @@ export default function registerRoomHandlers(socket: Socket, io: Server) {
     }, 1000);
 
     socket.on("create chat room", (channelID: string, channelDisplayName: string, isPublic:boolean=true, GivenStaticID:string="FFFFFFFFF")=>{
-      console.log("Chat room ${channelDisplayName} created with id ${channelID}");
+      console.log(`Chat room ${channelDisplayName} created with id ${channelID}`);
       var StaticID = "public";
       if(!isPublic)
         StaticID=GivenStaticID;
@@ -33,9 +33,10 @@ export default function registerRoomHandlers(socket: Socket, io: Server) {
       
       Rooms.push(Room);
       SaveRooms();
-      io.emit("create chat room", channelID, channelDisplayName, StaticID);
+      socket.emit("create chat room", channelID, channelDisplayName, StaticID);
     });
     socket.on("join chat room", (channelID:string)=>{
+      console.log("test");
       // JoinRoom(socket.id, channelID);
       socket.join(channelID);
     });
@@ -46,6 +47,15 @@ export default function registerRoomHandlers(socket: Socket, io: Server) {
     socket.on("disconnect", ()=>{
       // LeaveAllRooms(socket.id);
     });
+    socket.on("get user count", () => {
+      const joinedRooms = Array.from(socket.rooms).filter(room => room !== socket.id);
+      const roomID = joinedRooms[0]; // z. B. "0404"
+      
+      const room = io.sockets.adapter.rooms.get(roomID);
+      const count = room ? room.size : 0;
+      socket.emit("send user count", count);
+    });
+    
 }
 
 export function JoinRoom(socketID:string, channel:string)
