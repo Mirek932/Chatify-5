@@ -69,11 +69,12 @@ export default function registerChatHandlers(socket, io) {
 setInterval(() => {
     UsersMPM.forEach((value, key) => UsersMPM.set(key, 0));
 }, 1000 * 60);
-async function ClientLoadMessages(clientID, chatRoom, io) {
+export async function ClientLoadMessages(clientID, chatRoom, io) {
     Messages.forEach((msg) => {
         if (msg.ChatRoom === chatRoom)
             io.emit("single chat message", msg.Message, clientID, msg.User, msg.Time);
     });
+    io.emit("response");
 }
 async function SaveMessages() {
     const jsonString = JSON.stringify(Messages, null, 2);

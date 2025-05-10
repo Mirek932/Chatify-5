@@ -5,22 +5,6 @@
     "StaticID": "public"
   },
   {
-    "DisplayName": "Chatroom",
-    "RoomID": "EmilianSuperPrivaterRoom",
-    "StaticID": "ctAgsn4sjRret98MkKOz",
-    "OnlineMembers": [
-      "FhT2DCUhcw4IC8WOAAAH"
-    ]
-  },
-  {
-    "DisplayName": "Emilian Privat",
-    "RoomID": "EmilianSuperPrivaterRoom",
-    "StaticID": "ctAgsn4sjRret98MkKOz",
-    "OnlineMembers": [
-      "truU8vg456LCKuC4AAAR"
-    ]
-  },
-  {
     "DisplayName": "Mirek Privat",
     "RoomID": "EmilianSuperPrivaterRoom",
     "StaticID": "85hdTsAGX-qGy0XpglWB",
@@ -34,6 +18,14 @@
     "StaticID": "QMwQmZq7HOzdxDzbkhDI",
     "OnlineMembers": [
       "0zqPwQ8gzkzF8idLAAAC"
+    ]
+  },
+  {
+    "DisplayName": "Kommindiegruppe",
+    "RoomID": "Warumdenni",
+    "StaticID": "ctAgsn4sjRret98MkKOz",
+    "OnlineMembers": [
+      "BND_Uz06hP_wMs7wAAAB"
     ]
   }
 ]

@@ -86,16 +86,17 @@ export default function registerChatHandlers(socket: Socket, io: Server) {
       SaveMessages();
     });
 }
-
 setInterval(()=>{ // Reset the MPMs for each user
   UsersMPM.forEach((value, key: string)=>UsersMPM.set(key, 0));
+  
 }, 1000*60);
 
-async function ClientLoadMessages(clientID:string, chatRoom:string, io:Server) {
+export async function ClientLoadMessages(clientID:string, chatRoom:string, io:Server) {
   Messages.forEach((msg:ChatMessage)=>{
     if(msg.ChatRoom === chatRoom)
       io.emit("single chat message", msg.Message, clientID, msg.User, msg.Time);
   });
+  io.emit("response");
 }
 
 async function SaveMessages() {

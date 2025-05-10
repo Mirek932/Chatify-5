@@ -6,6 +6,7 @@
     <title>Chatify</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="icon" type="image/x-icon" href="/static/logooo.png">
     </style>
   </head>
   <body>
@@ -19,7 +20,7 @@
     <!-- Chat Container -->
     <div id="chat-container">
       <!-- Messages -->
-        <img src="static/PulseLoading.gif" id="messages-loading" style="width: 120px; height: auto; display: flex; position: absolute; left: 45%; top: 35%;" alt="Loading">
+        <img src="static/LoadingInfinite.gif" id="messages-loading" style="width: 120px; height: auto; display: flex; position: absolute; left: 45%; top: 35%;" alt="Loading">
       <ul id="messages"></ul>
     </div>
 
@@ -34,6 +35,7 @@
 
     <!-- Profil Popup -->
     <div class="popup" id="profile-popup">
+      <button class="room-close" id="close-profile-popup" style="margin-left: auto; position: relative; display: flex;">❌</button>
       <div class="popup-header">Profil bearbeiten</div>
       <div class="popup-content">
         <input type="text" class="popup-input" placeholder="Name" id="profile-name" />
@@ -44,11 +46,12 @@
 
     <!-- Raum Popup -->
     <div class="popup" id="room-popup">
+      <button class="room-close" id="close-room-popup" style="margin-left: auto; position: relative; display: flex;">❌</button>
       <div class="popup-header">Raum erstellen oder beitreten</div>
       <button class="popup-button" id="copy-room-link" style="padding: .2rem; margin: .2rem;">Link Kopieren</button>
       <div class="popup-content">
         <input type="text" minlength="4"maxlength="15" class="popup-input" placeholder="Raum Name" id="room-name" />
-        <input type="text" minlength="4"maxlength="10" class="popup-input" type="password" placeholder="Raum Code" id="room-code" />
+        <input type="text" minlength="4"maxlength="30" class="popup-input" type="password" placeholder="Raum Code (Slam on the Keyboard)" id="room-code" />
         <!--p>Öffentlich?</p>
         <input type="checkbox" id="room-checkbox"/-->
         <button class="popup-button" id="join-room">Beitreten / Erstellen</button>
@@ -60,13 +63,14 @@
       <br>
       <div id="Room-Container">
         <center>
-          <img src="static/PulseLoading.gif" id="rooms-loading" style="width: 120px; height: auto; display:inline;" alt="Loading">
+          <img src="static/LoadingStart.gif" id="rooms-loading" style="width: 120px; height: auto; display:inline;" alt="Loading">
         </center>
       </div>
     </div>
 
     <!-- Placeholder für Einstellungen -->
     <div class="popup" id="settings-popup">
+      <button class="room-close" id="close-settings-popup" style="margin-left: auto; position: relative; display: flex;">❌</button>
       <div class="popup-header">Links</div>
       <div class="popup-content">
         <a href="https://discord.gg/pYwXZNUqru">🟦Discord🟦</a>
@@ -97,16 +101,14 @@
       settingsIcon.addEventListener("click", () => settingsPopup.classList.add("active"));
 
       // Close Popups (click outside to close)
-      window.addEventListener("click", (e) => {
-      if (
-        e.target === profilePopup ||
-        e.target === roomPopup ||
-        e.target === settingsPopup
-      ) {
-        profilePopup.classList.remove("active");
+      document.getElementById("close-room-popup").addEventListener("click", (e) => {
         roomPopup.classList.remove("active");
+      });
+      document.getElementById("close-profile-popup").addEventListener("click", (e)=>{
+        profilePopup.classList.remove("active");
+      });
+      document.getElementById("close-settings-popup").addEventListener("click", (e)=>{
         settingsPopup.classList.remove("active");
-      }
       });
       // Character Count
       input.addEventListener("input", () => {

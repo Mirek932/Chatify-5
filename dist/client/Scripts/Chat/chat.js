@@ -11,6 +11,10 @@ var WaitForSocketToInit = setTimeout(() => {
             if (user === socket.id)
                 NewMessage(msg, author, time);
             document.getElementById("messages-loading")?.classList.add("hidden");
+            console.log("Fin");
+        });
+        socket.on("response", () => {
+            document.getElementById("messages-loading")?.classList.add("hidden");
         });
         socket.on("delete message", (msg, author, time) => {
             DeleteMessage(msg, author, time);

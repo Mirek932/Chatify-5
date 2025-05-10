@@ -1,4 +1,5 @@
 import { writeFile, readFile } from 'fs/promises';
+import { ClientLoadMessages } from './Chat.js';
 var Rooms = await LoadRooms();
 export var channelMembers = new Map();
 export default function registerRoomHandlers(socket, io) {
@@ -34,8 +35,17 @@ export default function registerRoomHandlers(socket, io) {
         // LeaveRoom(socket.id, channelID);
         socket.leave(channelID);
     });
-    socket.on("disconnect", () => {
-        // LeaveAllRooms(socket.id);
+    socket.on("delete chat room", (channelID, staticID) => {
+        socket.leave(channelID);
+        socket.join("0404");
+        ClientLoadMessages(socket.id, "0404", io);
+        console.log(`Room deletion Stage: 1 ${channelID} + ${staticID}`);
+        const index = Rooms.findIndex(room => room.RoomID === channelID &&
+            room.StaticID === staticID);
+        console.log("Room deletion Stage " + index);
+        if (index !== -1)
+            Rooms.splice(index, 1);
+        SaveRooms();
     });
     socket.on("get user count", () => {
         const joinedRooms = Array.from(socket.rooms).filter(room => room !== socket.id);
