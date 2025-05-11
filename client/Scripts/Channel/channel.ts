@@ -31,7 +31,7 @@ var waitForSocket = setTimeout(()=>{
     }
 }, 1000);
 
-export var currentChannelName = "Hub";
+export var currentChannelName:string = "Hub";
 const JoinRoom = <HTMLButtonElement>document.getElementById("join-room");
 const JoinChannel = <HTMLInputElement>document.getElementById("room-code");
 const channelDisplayName = <HTMLInputElement>document.getElementById("room-name");
@@ -57,7 +57,7 @@ function AppendChatRoom(displayName:string, channelID:string, important:boolean=
     const Delete = <HTMLButtonElement>document.createElement("button");
     //const RoomJoinButton = <HTMLButtonElement>document.createElement("button");
     //RoomJoinButton.innerHTML = "Beitreten";
-    RoomHeader.innerHTML = displayName;
+    RoomHeader.textContent = displayName;
     RoomParent.setAttribute("class", "Room-Container-Room");
     RoomParent.setAttribute("id", "ChatRoom");
     RoomParent.setAttribute("channelID", channelID);

@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { createServer } from 'http';
+import { createServer } from "http"
 import { Server } from 'socket.io';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -8,8 +8,14 @@ import registerRoomHandlers from './listeners/Rooms.js';
 import registerUserHandlers from './listeners/User.js';
 import { rateLimit } from 'express-rate-limit';
 import escapeHTML from 'escape-html';
+import { writeFile, readFile } from 'fs/promises';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const sslOptions = {
+  key: readFile(path.join(__dirname, "./cert/key.pem")),
+  cert: readFile(path.join(__dirname, "./cert/cert.pem"))
+};
 
 const PORT = process.env.PORT || 3000;
 const IPADRESS = `localhost:${PORT}`;

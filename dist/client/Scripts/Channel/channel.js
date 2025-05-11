@@ -50,7 +50,7 @@ function AppendChatRoom(displayName, channelID, important = false) {
     const Delete = document.createElement("button");
     //const RoomJoinButton = <HTMLButtonElement>document.createElement("button");
     //RoomJoinButton.innerHTML = "Beitreten";
-    RoomHeader.innerHTML = displayName;
+    RoomHeader.textContent = displayName;
     RoomParent.setAttribute("class", "Room-Container-Room");
     RoomParent.setAttribute("id", "ChatRoom");
     RoomParent.setAttribute("channelID", channelID);

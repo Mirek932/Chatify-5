@@ -25,7 +25,7 @@ socket.on("info box", (msg, time = 1000) => {
     var hideElement = document.getElementById("hideMessageSpam");
     hideElement.setAttribute("style", "display:block;");
     var pElement = document.getElementById("hideMessageInfo");
-    pElement.innerHTML = msg;
+    pElement.textContent = msg;
     var timer = setTimeout(() => {
         hideElement.setAttribute("style", "display:none;");
     }, time);

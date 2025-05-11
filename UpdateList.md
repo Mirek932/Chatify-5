@@ -52,7 +52,7 @@ if not:
 **FAQ**
 But couldn't the Hackers just modify the Servers code?
 - No; The Hackers can only modify the Client code, and cant even see the Servers code
-# [ ] 0.2.3 Alpha
+# [#] 0.3.0 Alpha
 [#] Delete Chat Rooms 
 ### Security Fixes
 [#] Rate Limit
