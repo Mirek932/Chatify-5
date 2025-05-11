@@ -1,5 +1,4 @@
 import { Socket } from "socket.io";
-
 declare const io: () => Socket;
 
 const socket = io();
@@ -18,7 +17,7 @@ var channelID:string = params.get("channelID")||"EMPTYhEADERNOPE";
 var channelDisplayName:string = params.get("channelDisplayName")||"INVALIDdISPLAYNAME";
 if(channelID == "EMPTYhEADERNOPE" || channelDisplayName == "INVALIDdISPLAYNAME")
     window.location.href = "/404";
-serverNameEle.innerHTML = channelDisplayName;
+serverNameEle.textContent = channelDisplayName;
 
 invitionButton.addEventListener("click", ()=>{
     // accepted

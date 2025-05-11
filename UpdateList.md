@@ -54,3 +54,6 @@ But couldn't the Hackers just modify the Servers code?
 - No; The Hackers can only modify the Client code, and cant even see the Servers code
 # [ ] 0.0.3 Alpha
 [#] Delete Chat Rooms 
+### Security Fixes
+[#] Rate Limit
+[ ] Reflected Cross-site scripting

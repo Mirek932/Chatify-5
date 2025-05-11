@@ -11,7 +11,7 @@ var channelID = params.get("channelID") || "EMPTYhEADERNOPE";
 var channelDisplayName = params.get("channelDisplayName") || "INVALIDdISPLAYNAME";
 if (channelID == "EMPTYhEADERNOPE" || channelDisplayName == "INVALIDdISPLAYNAME")
     window.location.href = "/404";
-serverNameEle.innerHTML = channelDisplayName;
+serverNameEle.textContent = channelDisplayName;
 invitionButton.addEventListener("click", () => {
     // accepted
     socket.emit("create chat room", channelID, channelDisplayName, false, staticID);
