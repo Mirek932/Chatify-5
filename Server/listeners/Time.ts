@@ -1,7 +1,6 @@
-import date from "date-and-time";
+import date from 'date-and-time';
 
-export function currentTime():string
-{
-    const now = new Date();
-    return date.format(now, 'YYYY/MM/DD HH:mm');
+export function currentTime(): string {
+  const now = new Date();
+  return date.format(now, 'YYYY/MM/DD HH:mm');
 }

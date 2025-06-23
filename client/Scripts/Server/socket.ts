@@ -1,6 +1,6 @@
-import { Socket } from "socket.io";
-import { Username } from "../User/user.js";
-import { currentChannel } from "../Channel/channel.js";
+import { Socket } from 'socket.io';
+import { Username } from '../User/user.js';
+import { currentChannel } from '../Channel/channel.js';
 
 declare const io: () => Socket;
 
@@ -12,30 +12,28 @@ const input = <HTMLInputElement>document.getElementById('chat-input');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   if (input.value) {
-    socket.emit('chat message',input.value, Username, currentChannel);
-    input.value = ''; 
+    socket.emit('chat message', input.value, Username, currentChannel);
+    input.value = '';
   }
 });
 
-socket.on("send active CACCs", (successfully:boolean)=>{
-  var responseInfo = <HTMLElement>document.getElementById("someone-chatting");
-  if(successfully)
-    responseInfo.classList.add("hidden");
-  else
-    responseInfo.classList.remove("hidden");
+socket.on('send active CACCs', (successfully: boolean) => {
+  var responseInfo = <HTMLElement>document.getElementById('someone-chatting');
+  if (successfully) responseInfo.classList.add('hidden');
+  else responseInfo.classList.remove('hidden');
 });
 
-var CACCsInterval = setInterval(()=>{
-  socket.emit("set CACC", currentChannel, input.value.trim() != "");
-  socket.emit("get CACCs", currentChannel);
-}, 1000);
+// var CACCsInterval = setInterval(() => {
+//   socket.emit("set CACC", currentChannel, input.value.trim() != "");
+//   socket.emit("get CACCs", currentChannel);
+// }, 1000);
 
-socket.on("info box", (msg:string, time=1000) => {
-  var hideElement = <HTMLElement>document.getElementById("hideMessageSpam");
-  hideElement.setAttribute("style", "display:block;");
-    var pElement = <HTMLElement>document.getElementById("hideMessageInfo");
-    pElement.textContent = msg;
-    var timer : NodeJS.Timeout = setTimeout(()=>{
-    hideElement.setAttribute("style", "display:none;");
-}, time);
+socket.on('info box', (msg: string, time: number = 1000) => {
+  var hideElement = <HTMLElement>document.getElementById('hideMessageSpam');
+  hideElement.setAttribute('style', 'display:block;');
+  var pElement = <HTMLElement>document.getElementById('hideMessageInfo');
+  pElement.textContent = msg;
+  setTimeout(() => {
+    hideElement.setAttribute('style', 'display:none;');
+  }, time);
 });

@@ -1,15 +1,19 @@
-import express from 'express';
-import { createServer } from "https";
-import { Server } from 'socket.io';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import registerChatHandlers from './listeners/Chat.js';
-import registerRoomHandlers from './listeners/Rooms.js';
-import registerUserHandlers from './listeners/User.js';
-import { rateLimit } from 'express-rate-limit';
-import escapeHTML from 'escape-html';
+import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import path from "path";
+import { fileURLToPath } from "url";
+import registerChatHandlers from "./listeners/Chat.js";
+import registerRoomHandlers from "./listeners/Rooms.js";
+import registerUserHandlers from "./listeners/User.js";
+import { rateLimit } from "express-rate-limit";
+import escapeHTML from "escape-html";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+// const sslOptions = {
+//   key: readFile(path.join(__dirname, "./cert/key.pem")),
+//   cert: readFile(path.join(__dirname, "./cert/cert.pem")),
+// };
 const PORT = process.env.PORT || 3000;
 const IPADRESS = `localhost:${PORT}`;
 const app = express();
@@ -17,21 +21,21 @@ const server = createServer(app);
 const io = new Server(server);
 var limiter = rateLimit({
     windowMs: 10 * 60 * 1000,
-    max: 100
+    max: 100,
 });
 app.set("trust proxy", 1);
 // Middleware für statische Dateien
 app.use(limiter);
-app.use(express.static(path.join(__dirname, '../dist/client')));
-app.use('/static', express.static(path.join(__dirname, '../dist/client/static')));
+app.use(express.static(path.join(__dirname, "../dist/client")));
+app.use("/static", express.static(path.join(__dirname, "../dist/client/static")));
 // Typisierte Route-Handler
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/client/' + req));
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../dist/client/" + req));
 });
-app.get('/invite', (req, res) => {
-    const channelID = escapeHTML(String(req.query.channelID || 'Unknown'));
-    const channelName = escapeHTML(String(req.query.channelDisplayName || 'Chatroom'));
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+app.get("/invite", (req, res) => {
+    const channelID = escapeHTML(String(req.query.channelID || "Unknown"));
+    const channelName = escapeHTML(String(req.query.channelDisplayName || "Chatroom"));
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     res.send(`<!DOCTYPE html>
   <html lang="de">
     <head>
@@ -55,14 +59,14 @@ app.get('/invite', (req, res) => {
   </html>`);
 });
 // Socket.IO mit Typen
-io.on('connection', (socket) => {
-    console.log('Neue Verbindung:', socket.id);
+io.on("connection", (socket) => {
+    console.log("Neue Verbindung:", socket.id);
     // Register the Handlers
     registerChatHandlers(socket, io);
     registerRoomHandlers(socket, io);
     registerUserHandlers(socket, io);
-    socket.on('disconnect', () => {
-        console.log('Client getrennt:', socket.id);
+    socket.on("disconnect", () => {
+        console.log("Client getrennt:", socket.id);
     });
 });
 server.listen(PORT, () => {

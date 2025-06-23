@@ -1,7 +1,7 @@
 var ActiveUsers = new Array();
 export default function registerUserHandlers(socket, io) {
-    socket.on("Change Username", (uname) => {
-        socket.emit("Change Username", ChangeUsername(uname));
+    socket.on('Change Username', (uname) => {
+        socket.emit('Change Username', ChangeUsername(uname));
     });
 }
 function ChangeUsername(uname) {

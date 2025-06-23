@@ -46,14 +46,17 @@ On the top, you can find all important tabs, like custom the Profile, or Changin
 heres an quick overview over all theese:
 
 ### Profile
+
 Change youre Profilename. Just type in the Box and click accept
 
 ### Chat Rooms
+
 Connect to private Chat Rooms:
-1. Find a code that you can rembember (for example: 0404 [This is the main lobby code, where all people on joining are]) 
+
+1. Find a code that you can rembember (for example: 0404 [This is the main lobby code, where all people on joining are])
 2. Type it in the box with the correct spelling and uppercases.
 3. Press connect on both devices
-Now the current Chat is the one of the Chat room
+   Now the current Chat is the one of the Chat room
 
 ## 🚀 Known Issues <a name = "deployment"></a>
 
@@ -76,35 +79,51 @@ Now the current Chat is the one of the Chat room
 ### Libraries
 
 ### NodeJS
+
 [NodeJS](https://nodejs.org)
 From the nodeJS website:
 Node.js is a free, open-source, cross-platform JavaScript runtime environment that lets developers create servers, web apps, command line tools and scripts.
+
 ### SocketIO
+
 [Socket.IO](https://socket.io)
 From the socket.io website:
 Bidirectional and low-latency communication for every platform
 Performant, Reliable, Scalable
+
 #### Other libraries
+
 [Express](https://expressjs.com/)
 http
 fs
 And many more...
 
-❗you can see all the libraries used in ```./node_modules```
+❗you can see all the libraries used in `./node_modules`
 
 ### People
 
 ### Leads
+
 #### Development Leader
+
 Emilian [Founder]
+
 #### UI Leader
+
 Emilian [Founder]
+
 ### Development
+
 #### Frontend
+
 Mirek [Co Founder]
+
 #### Backend
+
 Mirek [Co Founder]
+
 ### UI
+
 Emilian [Founder]
 
 ## Socials <a name = "acknowledgement"></a>
